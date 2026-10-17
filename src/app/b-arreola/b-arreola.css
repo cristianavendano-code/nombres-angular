@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&display=swap');
+
+    :host {
+        --ink: #f5fbff;
+        --cyan: #19e6ff;
+        --lime: #c7ff39;
+        --orange: #ff7043;
+        --night: #02070a;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    :host {
+        align-items: center;
+        background: var(--night);
+        color: var(--ink);
+        display: flex;
+        font-family: 'Orbitron', sans-serif;
+        justify-content: center;
+        margin: 0;
+        min-height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+    :host::before {
+        background-image: linear-gradient(rgba(25, 230, 255, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(25, 230, 255, .08) 1px, transparent 1px);
+        background-size: 44px 44px;
+        content: '';
+        inset: 0;
+        mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+        opacity: .5;
+        position: absolute;
+        transform: perspective(450px) rotateX(52deg) scale(1.6) translateY(18%);
+        transform-origin: center bottom;
+    }
+
+    .scanlines {
+        background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .025) 0, rgba(255, 255, 255, .025) 1px, transparent 1px, transparent 5px);
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: 5;
+    }
+
+    .gamer-object {
+        pointer-events: none;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .lightning {
+        animation: zap 3.8s ease-in-out infinite;
+        color: var(--lime);
+        filter: drop-shadow(0 0 9px var(--lime));
+        font-size: clamp(4rem, 12vw, 9rem);
+        font-weight: 900;
+        line-height: 1;
+        opacity: .8;
+        transform: rotate(-18deg);
+    }
+
+    .lightning--one { left: 8%; top: 12%; }
+    .lightning--two { animation-delay: -1.9s; bottom: 10%; right: 8%; transform: rotate(18deg) scale(.7); }
+
+    .arcade {
+        animation: float 5s ease-in-out infinite;
+        border: 3px solid var(--cyan);
+        border-radius: 16px 16px 5px 5px;
+        bottom: 13%;
+        box-shadow: 0 0 18px rgba(25, 230, 255, .4), inset 0 -18px rgba(255, 112, 67, .2);
+        height: 92px;
+        left: 8%;
+        transform: skewY(-4deg);
+        width: 68px;
+    }
+
+    .arcade::before {
+        border: 2px solid var(--orange);
+        box-shadow: 14px 22px 0 -6px var(--lime), 22px 22px 0 -6px var(--lime);
+        content: '';
+        height: 25px;
+        left: 10px;
+        position: absolute;
+        top: 11px;
+        width: 42px;
+    }
+
+    .arcade::after {
+        background: var(--orange);
+        border-radius: 50%;
+        box-shadow: 18px 0 var(--cyan);
+        content: '';
+        height: 7px;
+        left: 15px;
+        position: absolute;
+        top: 54px;
+        width: 7px;
+    }
+
+    .controller {
+        animation: float 6s ease-in-out infinite reverse;
+        border: 3px solid var(--orange);
+        border-radius: 30px 30px 14px 14px;
+        box-shadow: 0 0 17px rgba(255, 112, 67, .35);
+        height: 42px;
+        right: 8%;
+        top: 18%;
+        transform: rotate(12deg);
+        width: 84px;
+    }
+
+    .controller::before {
+        color: var(--lime);
+        content: '+  •';
+        font-size: 1.2rem;
+        left: 12px;
+        letter-spacing: 9px;
+        position: absolute;
+        top: 5px;
+    }
+
+    .hadouken {
+        animation: blast 4.5s linear infinite;
+        background: radial-gradient(circle, #fff 0 12%, var(--cyan) 30%, transparent 70%);
+        border-radius: 50%;
+        box-shadow: 0 0 15px 6px var(--cyan), 0 0 35px 9px rgba(25, 230, 255, .35);
+        height: 52px;
+        left: 0;
+        opacity: .8;
+        top: 72%;
+        width: 52px;
+    }
+
+    .card {
+        animation: enter .9s cubic-bezier(.2, .8, .2, 1) both;
+        max-width: 1600px;
+        padding: 2rem;
+        position: relative;
+        text-align: center;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .status {
+        color: var(--lime);
+        font-size: clamp(.55rem, 1.8vw, .72rem);
+        letter-spacing: .28em;
+        margin: 0 0 1.8rem;
+    }
+
+    .status::before {
+        background: var(--lime);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--lime);
+        content: '';
+        display: inline-block;
+        height: 7px;
+        margin-right: 10px;
+        width: 7px;
+    }
+
+    h1 {
+        color: var(--ink);
+        font-size: clamp(2rem, 8.8vw, 9.2rem);
+        letter-spacing: clamp(.02em, .8vw, .08em);
+        line-height: 1.05;
+        margin: 0;
+        text-shadow: 0 0 10px rgba(25, 230, 255, .85), 7px 7px 0 rgba(255, 112, 67, .35);
+    }
+
+    .rule {
+        background: linear-gradient(90deg, transparent, var(--cyan), var(--lime), transparent);
+        height: 2px;
+        margin: 2rem auto 1.5rem;
+        max-width: 360px;
+    }
+
+    .tagline {
+        color: rgba(245, 251, 255, .58);
+        font-size: clamp(.55rem, 1.8vw, .72rem);
+        letter-spacing: .2em;
+        margin: 0;
+    }
+
+    @keyframes zap {
+        0%, 100% { opacity: .35; transform: rotate(-18deg) translateY(0); }
+        50% { opacity: 1; transform: rotate(-18deg) translateY(18px); }
+    }
+
+    @keyframes float {
+        0%, 100% { margin-top: 0; }
+        50% { margin-top: -18px; }
+    }
+
+    @keyframes blast {
+        from { transform: translateX(-10vw) scale(.45); }
+        to { transform: translateX(110vw) scale(1.2); }
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: .2; transform: scale(.8); }
+        50% { opacity: 1; transform: scale(1.6); }
+    }
+
+    @keyframes enter {
+        from { opacity: 0; transform: translateY(22px) scale(.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
