@@ -1,36 +1,15 @@
-<header style="text-align: center; padding: 20px;">
-  <h1>Proyecto Integrador - Presentación del Equipo</h1>
-</header>
+<nav class="navbar">
+  <div class="nav-title">Conocenos</div>
+  <div class="nav-links">
+    <a routerLink="/c-avendano" routerLinkActive="active" class="nav-btn">C. Avendaño</a>
+    <a routerLink="/a-saucedo" routerLinkActive="active" class="nav-btn">A. Saucedo</a>
+    <a routerLink="/b-arreola" routerLinkActive="active" class="nav-btn">B. Arreola</a>
+    <a routerLink="/o-castillo" routerLinkActive="active" class="nav-btn">O. Castillo</a>
+    <a routerLink="/e-leyva" routerLinkActive="active" class="nav-btn">E. Leyva</a>
+    <a routerLink="/a-candia" routerLinkActive="active" class="nav-btn">A. Candia</a>
+  </div>
+</nav>
 
-<main>
-  <!-- Sección de A. Jiménez -->
-  <section>
-    <app-a-saucedo></app-a-saucedo>
-  </section>
-
-  <!-- Sección de C. Avendaño -->
-  <section>
-    <app-c-avendano></app-c-avendano>
-  </section>
-
-  <!-- Sección de O. Castillo -->
-  <section>
-    <app-o-castillo></app-o-castillo>
-  </section>
-
-<!-- Sección de E. Leyva -->
-<section>
-  <app-e-leyva></app-e-leyva> 
-</section>
-
-<!-- Sección de A. Candia -->
-<section>
-  <app-a-candia></app-a-candia>
-</section>
-
-<!-- Sección de B. Arreola -->
-<section>
-  <app-b-arreola></app-b-arreola>
-</section>
-
+<main class="content-container">
+  <router-outlet></router-outlet>
 </main>
