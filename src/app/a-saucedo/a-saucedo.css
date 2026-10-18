@@ -1,0 +1,126 @@
+   :root {
+  --lila-suave: #efe6fb;
+  --lila: #c9b1f0;
+  --lila-oscuro: #7a4fb5;
+  --rosa: #ffc2dd;
+  --rosa-fuerte: #e6559b;
+  --crema: #fff8fc;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { min-height: 100%; }
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow-x: hidden;
+  font-family: "Quicksand", "Trebuchet MS", sans-serif;
+  color: var(--lila-oscuro);
+  background: linear-gradient(140deg, var(--lila-suave) 0%, #f7d9ea 55%, var(--rosa) 100%);
+}
+
+/* Pétalos decorativos */
+.petalo {
+  position: fixed;
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+  filter: blur(2px);
+  opacity: 0.55;
+  z-index: 0;
+}
+.petalo-1 { width: 320px; height: 320px; top: -90px; left: -80px; background: var(--lila); }
+.petalo-2 { width: 260px; height: 260px; bottom: -70px; right: -60px; background: var(--rosa); }
+.petalo-3 { width: 150px; height: 150px; bottom: 18%; left: 8%; background: #e3d0fa; }
+
+/* Tarjeta central */
+.tarjeta {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 640px);
+  padding: 64px 40px 56px;
+  text-align: center;
+  background: rgba(255, 248, 252, 0.72);
+  border: 2px solid #fff;
+  border-radius: 200px 200px 48px 48px;
+  box-shadow: 0 24px 60px rgba(122, 79, 181, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.saludo {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--rosa-fuerte);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+h1 {
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.nombre {
+  display: block;
+  font-size: clamp(4rem, 15vw, 6.8rem);
+  background: linear-gradient(90deg, var(--lila-oscuro), var(--rosa-fuerte));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 0 0.1em 0.08em;
+}
+
+.nombre.segundo {
+  margin-top: -0.12em;
+  padding-left: 0.9em;
+  background: linear-gradient(90deg, var(--rosa-fuerte), var(--lila-oscuro));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.apellidos {
+  margin-top: 14px;
+  font-size: clamp(1.2rem, 4.5vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--lila-oscuro);
+}
+
+/* Adorno floral */
+.adorno {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 28px auto 22px;
+  width: 70%;
+}
+.adorno span {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lila), transparent);
+}
+.adorno i {
+  font-style: normal;
+  font-size: 1.6rem;
+  color: var(--rosa-fuerte);
+}
+
+.frase {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #9a6bc9;
+}
+
+/* Un solo momento de movimiento: la flor gira suavemente */
+@media (prefers-reduced-motion: no-preference) {
+  .adorno i { animation: girar 12s linear infinite; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+}
+
+@media (max-width: 480px) {
+  .tarjeta { padding: 56px 20px 44px; border-radius: 140px 140px 36px 36px; }
+  .nombre.segundo { padding-left: 0.4em; }
+}
