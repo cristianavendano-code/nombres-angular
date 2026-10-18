@@ -1,1 +1,87 @@
-<p>c-avendano works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Tele Vieja</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        body {
+            background-color: #121212;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'VT323', monospace;
+            color: #33ff00; 
+        }
+
+        .crt-screen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle, #2a2a2a 0%, #000000 100%);
+        }
+
+        .retro-text {
+            font-size: 10rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px #33ff00, 0 0 20px #33ff00;
+            animation: parpadeo-luz 0.15s infinite;
+            z-index: 10;
+        }
+
+        .crt-screen::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 20;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .crt-screen::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            height: 15px;
+            background: rgba(0, 255, 0, 0.15);
+            opacity: 0.6;
+            z-index: 20;
+            animation: linea-baja 5s linear infinite;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        @keyframes linea-baja {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        @keyframes parpadeo-luz {
+            0% { opacity: 0.85; }
+            50% { opacity: 1; }
+            100% { opacity: 0.90; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="crt-screen">
+        <div class="retro-text">Cristian Avendaño del Solar</div>
+    </div>
+
+</body>
+</html>
