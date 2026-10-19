@@ -1,0 +1,255 @@
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #rainCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glitch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: transparent;
+            z-index: 5;
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+
+        /* Soporte / Cadenas superiores del letrero */
+        .signboard-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .signboard-mounts {
+            display: flex;
+            justify-content: space-between;
+            width: 70%;
+            height: 25px;
+            position: absolute;
+            top: -25px;
+        }
+
+        .mount-chain {
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #444, #888);
+            box-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Estilo Avanzado de Letrero Neón / Industrial */
+        .signboard {
+            position: relative;
+            padding: 2.5rem 3.5rem;
+            background: linear-gradient(135deg, rgba(12, 12, 16, 0.9), rgba(5, 5, 8, 0.95));
+            border: 2px solid rgba(0, 255, 255, 0.6);
+            border-radius: 6px;
+            box-shadow: 
+                0 0 35px rgba(0, 255, 255, 0.25),
+                0 0 10px rgba(255, 0, 85, 0.2),
+                inset 0 0 25px rgba(0, 0, 0, 0.8),
+                inset 0 0 10px rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            animation: sign-flicker 4s infinite;
+            width: 100%;
+            max-width: 440px;
+            box-sizing: border-box;
+        }
+
+        /* Marco interior secundario de seguridad */
+        .signboard::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px dashed rgba(255, 0, 85, 0.4);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        /* Tornillos industriales en las 4 esquinas */
+        .screw {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #ccc 30%, #333 70%);
+            border: 1px solid #111;
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+            z-index: 6;
+        }
+        .screw-tl { top: 10px; left: 10px; }
+        .screw-tr { top: 10px; right: 10px; }
+        .screw-bl { bottom: 10px; left: 10px; }
+        .screw-br { bottom: 10px; right: 10px; }
+
+        .glitch {
+            position: relative;
+            font-size: clamp(1.3rem, 3vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: #fff;
+            letter-spacing: 0.05em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff0055;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ffff, 0 2px #ff0055;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% {
+                clip: rect(24px, 9999px, 86px, 0);
+                transform: skew(0.3deg);
+            }
+            10% {
+                clip: rect(85px, 9999px, 140px, 0);
+                transform: skew(0.8deg);
+            }
+            20% {
+                clip: rect(10px, 9999px, 50px, 0);
+                transform: skew(0.1deg);
+            }
+            30% {
+                clip: rect(110px, 9999px, 130px, 0);
+                transform: skew(0.5deg);
+            }
+            40% {
+                clip: rect(40px, 9999px, 90px, 0);
+                transform: skew(0.2deg);
+            }
+            50% {
+                clip: rect(15px, 9999px, 110px, 0);
+                transform: skew(0.9deg);
+            }
+            60% {
+                clip: rect(70px, 9999px, 120px, 0);
+                transform: skew(0.4deg);
+            }
+            70% {
+                clip: rect(5px, 9999px, 60px, 0);
+                transform: skew(0.6deg);
+            }
+            80% {
+                clip: rect(95px, 9999px, 150px, 0);
+                transform: skew(0.1deg);
+            }
+            90% {
+                clip: rect(30px, 9999px, 100px, 0);
+                transform: skew(0.7deg);
+            }
+            100% {
+                clip: rect(60px, 9999px, 110px, 0);
+                transform: skew(0.3deg);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip: rect(10px, 9999px, 80px, 0);
+                transform: skew(0.5deg);
+            }
+            15% {
+                clip: rect(90px, 9999px, 120px, 0);
+                transform: skew(0.2deg);
+            }
+            30% {
+                clip: rect(20px, 9999px, 60px, 0);
+                transform: skew(0.8deg);
+            }
+            45% {
+                clip: rect(70px, 9999px, 140px, 0);
+                transform: skew(0.1deg);
+            }
+            60% {
+                clip: rect(40px, 9999px, 100px, 0);
+                transform: skew(0.6deg);
+            }
+            75% {
+                clip: rect(110px, 9999px, 130px, 0);
+                transform: skew(0.3deg);
+            }
+            90% {
+                clip: rect(5px, 9999px, 50px, 0);
+                transform: skew(0.9deg);
+            }
+            100% {
+                clip: rect(50px, 9999px, 90px, 0);
+                transform: skew(0.4deg);
+            }
+        }
+
+        @keyframes sign-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                border-color: rgba(0, 255, 255, 0.7);
+                box-shadow: 0 0 40px rgba(0, 255, 255, 0.3), 0 0 15px rgba(255, 0, 85, 0.25), inset 0 0 25px rgba(0, 0, 0, 0.8);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                border-color: rgba(255, 0, 85, 0.3);
+                box-shadow: 0 0 10px rgba(255, 0, 85, 0.15), inset 0 0 15px rgba(0, 0, 0, 0.8);
+                opacity: 0.92;
+            }
+        }
+
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 4px, 6px 100%;
+            z-index: 10;
+        }
