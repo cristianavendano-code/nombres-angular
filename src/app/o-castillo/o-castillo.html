@@ -1,1 +1,228 @@
-<p>o-castillo works!</p>
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osler René Castillo Estrada - Glitch & Rain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="o-castillo.css">
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <canvas id="rainCanvas"></canvas>
+    
+    <div class="glitch-wrapper">
+        <div class="signboard-container">
+            <div class="signboard-mounts">
+                <div class="mount-chain"></div>
+                <div class="mount-chain"></div>
+            </div>
+
+            <!-- LETRERO DE NOMBRE -->
+            <div class="signboard">
+                <div class="screw screw-tl"></div>
+                <div class="screw screw-tr"></div>
+                <div class="screw screw-bl"></div>
+                <div class="screw screw-br"></div>
+                
+                <h1 class="glitch px-4" data-text="OSLER RENÉ CASTILLO ESTRADA">
+                    OSLER RENÉ<br>CASTILLO ESTRADA
+                </h1>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Lluvia y efectos de rayos originales
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let drops = [];
+        let splashes = [];
+        let lightnings = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Lightning {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.segments = [];
+                let currentX = this.x;
+                let currentY = 0;
+                
+                while (currentY < height * 0.7) {
+                    let nextX = currentX + (Math.random() * 60 - 30);
+                    let nextY = currentY + Math.random() * 30 + 15;
+                    this.segments.push({x1: currentX, y1: currentY, x2: nextX, y2: nextY});
+                    currentX = nextX;
+                    currentY = nextY;
+                }
+
+                this.flashAlpha = 0.6;
+                this.life = 15;
+            }
+
+            update() {
+                this.life--;
+                this.flashAlpha *= 0.85;
+            }
+
+            draw() {
+                ctx.save();
+                
+                if (this.flashAlpha > 0.01) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.globalAlpha = this.flashAlpha;
+                    ctx.fillRect(0, 0, width, height);
+                }
+
+                ctx.strokeStyle = '#ffffff';
+                ctx.shadowBlur = 25;
+                ctx.shadowColor = '#00ffff';
+                ctx.lineWidth = 2.5;
+                ctx.globalAlpha = Math.min(1, this.life / 5);
+
+                ctx.beginPath();
+                for (let seg of this.segments) {
+                    ctx.moveTo(seg.x1, seg.y1);
+                    ctx.lineTo(seg.x2, seg.y2);
+                }
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+
+        function manageLightning() {
+            if (lightnings.length === 0 && Math.random() < 0.008) {
+                lightnings.push(new Lightning());
+            }
+
+            for (let i = lightnings.length - 1; i >= 0; i--) {
+                lightnings[i].update();
+                lightnings[i].draw();
+                if (lightnings[i].life <= 0) {
+                    lightnings.splice(i, 1);
+                }
+            }
+        }
+
+        class Drop {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height - 50;
+                this.length = Math.random() * 25 + 15;
+                this.speed = Math.random() * 8 + 6;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = Math.random() > 0.5 ? '#00ffff' : (Math.random() > 0.5 ? '#ff0055' : '#ffffff');
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y >= height - 30) {
+                    createSplash(this.x, height - 20, this.color);
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y + this.length);
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        class SplashParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI - Math.PI; 
+                const force = Math.random() * 3 + 1;
+                this.vx = Math.cos(angle) * force;
+                this.vy = Math.sin(angle) * force - 1;
+                this.gravity = 0.2;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.03 + 0.02;
+            }
+
+            update() {
+                this.vx *= 0.98;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                if (this.alpha <= 0) return;
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, 2, 2);
+                ctx.restore();
+            }
+        }
+
+        function createSplash(x, y, color) {
+            const count = Math.floor(Math.random() * 4) + 3;
+            for (let i = 0; i < count; i++) {
+                splashes.push(new SplashParticle(x, y, color));
+            }
+        }
+
+        const dropCount = Math.floor(window.innerWidth / 12);
+        for (let i = 0; i < dropCount; i++) {
+            drops.push(new Drop());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            manageLightning();
+
+            for (let i = 0; i < drops.length; i++) {
+                drops[i].update();
+                drops[i].draw();
+            }
+
+            for (let i = splashes.length - 1; i >= 0; i--) {
+                splashes[i].update();
+                splashes[i].draw();
+                if (splashes[i].alpha <= 0) {
+                    splashes.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
